@@ -18,7 +18,7 @@ const Header = () => {
         credentials: 'include'
       };
 
-      const response = await fetch('http://localhost:8000/logout', requestOptions);
+      const response = await fetch('https://inventory-management-53wd.onrender.com/logout', requestOptions);
       const data = await response.json();
       if (data.success) {
         toast.success(data.message);
