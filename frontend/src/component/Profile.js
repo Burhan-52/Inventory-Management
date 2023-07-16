@@ -15,7 +15,7 @@ const Profile = () => {
                     credentials: 'include'
                 }
 
-                const response = await fetch(`http://localhost:8000/profile`, requestOptions)
+                const response = await fetch(`https://inventory-management-53wd.onrender.com/profile`, requestOptions)
                 const data = await response.json()
                 if (data.success) {
                     setUserProfile(data.user);

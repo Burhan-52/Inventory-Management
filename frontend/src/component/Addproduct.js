@@ -37,7 +37,7 @@ const AddProduct = () => {
                 }),
             }
 
-            const response = await fetch("http://localhost:8000/product", requestOptions)
+            const response = await fetch("https://inventory-management-53wd.onrender.com/product", requestOptions)
             const data = await response.json();
             setRefresh((prev) => !prev)
             toast.success(data.message);
@@ -60,7 +60,7 @@ const AddProduct = () => {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             }
-            const response = await fetch(`http://localhost:8000/product/products/${user._id}`, requestOptions)
+            const response = await fetch(`https://inventory-management-53wd.onrender.com/product/products/${user._id}`, requestOptions)
             const data = await response.json();
             setProductList(data.products)
         } catch (error) {
@@ -73,7 +73,7 @@ const AddProduct = () => {
             const requestOptions = {
                 method: 'DELETE',
             }
-            const response = await fetch(`http://localhost:8000/product/${id}`, requestOptions)
+            const response = await fetch(`https://inventory-management-53wd.onrender.com/product/${id}`, requestOptions)
             const data = await response.json();
             setRefresh((prev) => !prev)
             toast.success(data.message);
@@ -89,7 +89,7 @@ const AddProduct = () => {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             }
-            const response = await fetch(`http://localhost:8000/product/${user._id}?search=${search}`, requestOptions)
+            const response = await fetch(`https://inventory-management-53wd.onrender.com/product/${user._id}?search=${search}`, requestOptions)
             const data = await response.json();
             setsearchdata(data)
             setLoading(false)
@@ -109,7 +109,7 @@ const AddProduct = () => {
                     operation
                 }),
             }
-            const response = await fetch(`http://localhost:8000/product/update`, requestOptions)
+            const response = await fetch(`https://inventory-management-53wd.onrender.com/product/update`, requestOptions)
             const data = await response.json();
             setupdateloading(false)
             setRefresh((prev) => !prev)

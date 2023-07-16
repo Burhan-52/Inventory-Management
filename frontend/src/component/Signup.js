@@ -30,7 +30,7 @@ const Signup = () => {
                 credentials: 'include'
             }
 
-            const response = await fetch(`http://localhost:8000/signup`, requestOptions)
+            const response = await fetch(`https://inventory-management-53wd.onrender.com/signup`, requestOptions)
             const data = await response.json();
             console.log(data)
             setUser(data.newUser)

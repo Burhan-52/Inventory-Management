@@ -26,7 +26,7 @@ const Login = () => {
                 credentials: 'include'
             }
 
-            const response = await fetch(`http://localhost:8000/login`, requestOptions)
+            const response = await fetch(`https://inventory-management-53wd.onrender.com/login`, requestOptions)
             const data = await response.json();
             setUser(data.existingUser)
             if (data.success) {
