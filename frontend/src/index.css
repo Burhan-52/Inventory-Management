@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .search-container {
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        width: calc(100% - 24px);
+    }
+
+    .search-item {
+        width: 100%;
+    }
+}
