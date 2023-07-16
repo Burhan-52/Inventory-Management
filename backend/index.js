@@ -13,13 +13,13 @@ const corsOptions = {
     origin: true,
     credentials: true
 };
-
-app.use(cors(corsOptions))
+app.use(express.json());
 app.use(cookieParser());
+app.use(cors(corsOptions))
+
 connectToMongo()
 
 //Middleware 
-app.use(express.json());
 
 app.use("/", userRouter)
 app.use("/product", productRouter)
