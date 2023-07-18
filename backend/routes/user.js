@@ -36,7 +36,7 @@ router.post('/signup', async (req, res) => {
             domain: '.inventorycontrol.netlify.app',
             httpOnly: true,
             maxAge: 86400,
-            sameSite: "none",
+            sameSite: "None",
             secure: true
         });
 
@@ -76,7 +76,7 @@ router.post('/login', async (req, res) => {
             domain: '.inventorycontrol.netlify.app',
             httpOnly: true,
             maxAge: 86400,
-            sameSite: "none",
+            sameSite: "None",
             secure: true
 
         });
