@@ -33,7 +33,7 @@ router.post('/signup', async (req, res) => {
         const token = jwt.sign({ id: newUser._id }, process.env.OPTION_JWT)
 
         res.cookie('token', token, {
-            domain: 'https://inventorycontrol.netlify.app',
+            domain: 'inventorycontrol.netlify.app',
             httpOnly: true,
             maxAge: 86400,
             sameSite: "None",
@@ -73,7 +73,7 @@ router.post('/login', async (req, res) => {
         const token = jwt.sign({ id: existingUser._id }, process.env.OPTION_JWT)
 
         res.cookie('token', token, {
-            domain: 'https://inventorycontrol.netlify.app',
+            domain: 'inventorycontrol.netlify.app',
             httpOnly: true,
             maxAge: 86400,
             sameSite: "None",
