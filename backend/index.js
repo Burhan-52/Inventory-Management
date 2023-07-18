@@ -19,6 +19,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions))
 
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
+    next();
+});
+
 connectToMongo()
 
 //Middleware 
@@ -26,11 +32,6 @@ connectToMongo()
 app.use("/", userRouter)
 app.use("/product", productRouter)
 
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL);
-    next();
-});
 
 app.listen(process.env.PORT, () => {
     console.log(`server is Running at ${process.env.PORT}`)
