@@ -12,7 +12,7 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    const { isAuthenticated, setisAuthenticated, setUser ,isloading, setisloading } = useContext(Context)
+    const { isAuthenticated, setisAuthenticated, setUser, isloading, setisloading } = useContext(Context)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -21,11 +21,11 @@ const Login = () => {
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({
                     email: userlogin.email,
                     password: userlogin.password
                 }),
-                credentials: 'include'
             }
 
             const response = await fetch(`${server}/login`, requestOptions)
@@ -76,7 +76,7 @@ const Login = () => {
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
-                    {isloading ? <img className='w-6 h-6' src={spinner} alt='spinner'/> :"Login"}
+                    {isloading ? <img className='w-6 h-6' src={spinner} alt='spinner' /> : "Login"}
                 </button>
             </form>
             <p className="mt-4">

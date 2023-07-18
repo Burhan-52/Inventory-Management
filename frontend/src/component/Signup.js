@@ -23,13 +23,14 @@ const Signup = () => {
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify({
                     name: usersignup.name,
                     email: usersignup.email,
                     password: usersignup.password,
                     img: selectedImage && selectedImage.myFile
                 }),
-                credentials: 'include'
+               
             }
 
             const response = await fetch(`${server}/signup`, requestOptions)
