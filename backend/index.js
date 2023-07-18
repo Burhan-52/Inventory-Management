@@ -28,8 +28,8 @@ connectToMongo()
 
 //Middleware 
 
-app.use(`${process.env.BASE_URL}/`, userRouter)
-app.use(`${process.env.BASE_URL}/product`, productRouter)
+app.use("/", userRouter)
+app.use("/product", productRouter)
 
 
 app.listen(process.env.PORT, () => {
