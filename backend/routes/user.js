@@ -32,7 +32,12 @@ router.post('/signup', async (req, res) => {
 
         const token = jwt.sign({ id: newUser._id }, process.env.OPTION_JWT)
 
-        res.cookie('token', token, { httpOnly: true });
+        res.cookie('token', token, {
+            httpOnly: true,
+            maxAge: 86400,
+            sameSite: "none",
+            secure: true
+        });
 
         res.status(201).json({
             success: true,
@@ -66,7 +71,13 @@ router.post('/login', async (req, res) => {
 
         const token = jwt.sign({ id: existingUser._id }, process.env.OPTION_JWT)
 
-        res.cookie('token', token, { httpOnly: true });
+        res.cookie('token', token, {
+            httpOnly: true,
+            maxAge: 86400,
+            sameSite: "none",
+            secure: true
+
+        });
 
         res.status(201).json({
             success: true,
@@ -99,6 +110,27 @@ router.get('/profile', async (req, res) => {
         res.status(200).json({
             success: true,
             user
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
+    }
+});
+
+router.delete('/deleteuser', async (req, res) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.OPTION_JWT);
+        const user = await User.findOneAndDelete({ _id: decoded.id });
+
+        res.status(200).json({
+            success: true,
+            message: "Your account has been deleted successfully"
         });
     } catch (error) {
         console.log(error);

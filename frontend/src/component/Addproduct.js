@@ -5,10 +5,12 @@ import { Context } from '../App';
 import { Navigate } from "react-router-dom";
 import searchlogo from '../assessts/search.png'
 import '../index.css';
+import { server } from '../App';
+import spinner from "../assessts/spinner.gif"
 
 const AddProduct = () => {
 
-    const { isAuthenticated, user } = useContext(Context)
+    const { isAuthenticated, user, isloading, setisloading } = useContext(Context)
 
     const [product, setProduct] = useState({
         productname: '',
@@ -26,6 +28,7 @@ const AddProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
+            setisloading(true)
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -37,15 +40,17 @@ const AddProduct = () => {
                 }),
             }
 
-            const response = await fetch("https://inventory-management-53wd.onrender.com/product", requestOptions)
+            const response = await fetch(`${server}/product`, requestOptions)
             const data = await response.json();
             setRefresh((prev) => !prev)
             toast.success(data.message);
+            setisloading(false)
         } catch (error) {
             toast.error(error)
             console.log(error)
         }
-
+        
+        setisloading(false)
         setProduct({
             productname: '',
             quantity: '',
@@ -60,7 +65,7 @@ const AddProduct = () => {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             }
-            const response = await fetch(`https://inventory-management-53wd.onrender.com/product/products/${user._id}`, requestOptions)
+            const response = await fetch(`${server}/product/products/${user._id}`, requestOptions)
             const data = await response.json();
             setProductList(data.products)
         } catch (error) {
@@ -70,16 +75,19 @@ const AddProduct = () => {
 
     const deleteproduct = async (id) => {
         try {
+            setisloading(true)
             const requestOptions = {
                 method: 'DELETE',
             }
-            const response = await fetch(`https://inventory-management-53wd.onrender.com/product/${id}`, requestOptions)
+            const response = await fetch(`${server}/product/${id}`, requestOptions)
             const data = await response.json();
             setRefresh((prev) => !prev)
             toast.success(data.message);
+            setisloading(false)
         } catch (error) {
             console.log(error)
         }
+        setisloading(false)
     }
 
     const searchProduct = async () => {
@@ -89,7 +97,7 @@ const AddProduct = () => {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             }
-            const response = await fetch(`https://inventory-management-53wd.onrender.com/product/${user._id}?search=${search}`, requestOptions)
+            const response = await fetch(`${server}/product/${user._id}?search=${search}`, requestOptions)
             const data = await response.json();
             setsearchdata(data)
             setLoading(false)
@@ -109,7 +117,7 @@ const AddProduct = () => {
                     operation
                 }),
             }
-            const response = await fetch(`https://inventory-management-53wd.onrender.com/product/update`, requestOptions)
+            const response = await fetch(`${server}/product/update`, requestOptions)
             const data = await response.json();
             setupdateloading(false)
             setRefresh((prev) => !prev)
@@ -152,20 +160,7 @@ const AddProduct = () => {
 
                 {loading ? (
                     <div className="flex justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" stroke="#3498db">
-                            <g fill="none" fillRule="evenodd">
-                                <g transform="translate(2 2)" strokeWidth="4">
-                                    <circle cx="18" cy="18" r="18" strokeOpacity="0.5">
-                                        <animate attributeName="r" begin="0s" dur="1.8s" values="18;14;12;10;8;6;4;2;18" calcMode="linear" repeatCount="indefinite" />
-                                        <animate attributeName="stroke-opacity" begin="0s" dur="1.8s" values="0.5;0.45;0.4;0.35;0.3;0.25;0.2;0.15;0.5" calcMode="linear" repeatCount="indefinite" />
-                                    </circle>
-                                    <path d="M36 18c0-9.94-8.06-18-18-18" transform="rotate(231.764 18 18)">
-                                        <animate attributeName="stroke-dashoffset" begin="0s" dur="1.8s" values="0;49.94;49.94;0" calcMode="linear" repeatCount="indefinite" />
-                                        <animate attributeName="stroke-opacity" begin="0s" dur="1.8s" values="1;0;0;1" calcMode="linear" repeatCount="indefinite" />
-                                    </path>
-                                </g>
-                            </g>
-                        </svg>
+                        <img className='w-10 h-10 mt-4' src={spinner} alt='spinner' />
                     </div>
                 ) : search.length > 0 && (
                     <div className="bg-white mt-4 absolute left-[16rem] shadow-lg search-container">
@@ -230,7 +225,7 @@ const AddProduct = () => {
                     value={product.quantity}
                     required
                     onChange={(e) => setProduct({ ...product, quantity: e.target.value })}
-                   
+
                 />
                 <input
                     type="number"
@@ -244,7 +239,7 @@ const AddProduct = () => {
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
-                    Add Product
+                    {isloading ? <img className='w-6 h-6' src={spinner} alt='spinner' /> : "Add Product"}
                 </button>
             </form>
 

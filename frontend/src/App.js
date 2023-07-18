@@ -3,11 +3,14 @@ import Product from './component/Product';
 import { createContext, useState } from "react"
 
 export const Context = createContext({});
+export const server = "https://inventory-management-53wd.onrender.com"
 
 function App() {
-  
+
   const [isAuthenticated, setisAuthenticated,] = useState(false)
   const [user, setUser,] = useState([])
+  const [isloading, setisloading] = useState(false)
+
 
   return (
     <div className="App">
@@ -15,7 +18,9 @@ function App() {
         isAuthenticated,
         setisAuthenticated,
         user,
-        setUser
+        setUser,
+        isloading,
+        setisloading
       }} >
         < Product />
         <Toaster />

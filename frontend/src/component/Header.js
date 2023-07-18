@@ -1,28 +1,31 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Context } from '../App';
+import { Context, server } from '../App';
 import toast from 'react-hot-toast';
 import logo from '../assessts/logo.png'
+import spinner from "../assessts/spinner.gif"
 
 const Header = () => {
-  const { isAuthenticated, setisAuthenticated } = useContext(Context);
+  const { isAuthenticated, setisAuthenticated ,isloading, setisloading } = useContext(Context);
 
   const navigate = useNavigate();
 
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
+      setisloading(true)
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
       };
 
-      const response = await fetch('https://inventory-management-53wd.onrender.com/logout', requestOptions);
+      const response = await fetch(`${server}/logout`, requestOptions);
       const data = await response.json();
       if (data.success) {
         toast.success(data.message);
         setisAuthenticated(false);
+        setisloading(false)
         navigate('/login');
       } else {
         toast.error(data.error);
@@ -30,16 +33,17 @@ const Header = () => {
     } catch (error) {
       console.log(error);
     }
+    setisloading(false)
   };
 
   return (
     <header className="flex items-center justify-between w-full  px-6 py-4 bg-white shadow">
-       <Link to="/" className="flex items-center space-x-2">
+      <Link to="/" className="flex items-center space-x-2">
         <img src={logo} alt="Inventory Management Logo" className="w-10 h-10" />
-      
+
       </Link>
       <nav>
-        <ul className="flex space-x-4">
+        <ul className="flex items-center space-x-4">
           <li>
             <Link
               to="/"
@@ -59,14 +63,13 @@ const Header = () => {
             </li>
           )}
           {isAuthenticated ? (
-            <li>
-              <button
-                onClick={handleLogout}
-                className="text-red-500 hover:text-red-700"
-              >
-                Logout
-              </button>
-            </li>
+
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+               {isloading ? <img className='w-6 h-6' src={spinner} alt='spinner' /> : "Logout"}
+            </button>
           ) : (
             <li>
               <Link

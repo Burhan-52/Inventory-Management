@@ -1,7 +1,8 @@
-import React, { useState,useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '../App';
+import { Context, server } from '../App';
+import spinner from "../assessts/spinner.gif"
 
 const Login = () => {
     const [userlogin, setuserlogin] = useState({
@@ -11,11 +12,12 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    const {  setisAuthenticated,setUser } = useContext(Context)
+    const { isAuthenticated, setisAuthenticated, setUser ,isloading, setisloading } = useContext(Context)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
+            setisloading(true)
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -26,11 +28,12 @@ const Login = () => {
                 credentials: 'include'
             }
 
-            const response = await fetch(`https://inventory-management-53wd.onrender.com/login`, requestOptions)
+            const response = await fetch(`${server}/login`, requestOptions)
             const data = await response.json();
             setUser(data.existingUser)
             if (data.success) {
                 toast.success(data.message);
+                setisloading(false)
                 setisAuthenticated(true)
                 navigate("/")
             } else {
@@ -40,6 +43,7 @@ const Login = () => {
         } catch (error) {
             console.log(error)
         }
+        setisloading(false)
 
     }
     return (
@@ -72,12 +76,13 @@ const Login = () => {
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
-                    Login
+                    {isloading ? <img className='w-6 h-6' src={spinner} alt='spinner'/> :"Login"}
                 </button>
             </form>
             <p className="mt-4">
                 Don't have an account? <a href="/signup" className="text-blue-500">Sign Up</a>
             </p>
+
         </div>
     );
 }

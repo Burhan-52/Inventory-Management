@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { Context } from '../App';
+import { Context, server } from '../App';
+import spinner from "../assessts/spinner.gif"
 
 const Signup = () => {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -13,11 +14,12 @@ const Signup = () => {
 
     const navigate = useNavigate()
 
-    const { setisAuthenticated, setUser } = useContext(Context)
+    const { setisAuthenticated, setUser, isloading, setisloading } = useContext(Context)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
+            setisloading(true)
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -30,13 +32,14 @@ const Signup = () => {
                 credentials: 'include'
             }
 
-            const response = await fetch(`https://inventory-management-53wd.onrender.com/signup`, requestOptions)
+            const response = await fetch(`${server}/signup`, requestOptions)
             const data = await response.json();
             console.log(data)
             setUser(data.newUser)
 
             if (data.success) {
                 toast.success(data.message);
+                setisloading(false)
                 navigate("/")
                 setisAuthenticated(true)
             } else {
@@ -46,6 +49,7 @@ const Signup = () => {
         } catch (error) {
             toast.error(error.message)
         }
+        setisloading(false)
 
     }
     function convertToBase64(file) {
@@ -66,7 +70,7 @@ const Signup = () => {
         const base64 = await convertToBase64(file);
         setSelectedImage({ myFile: base64 })
     };
-    
+
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col justify-center items-center ">
             <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
@@ -115,7 +119,7 @@ const Signup = () => {
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
-                    Sign Up
+                    {isloading ? <img className='w-6 h-6' src={spinner} alt='spinner' /> : "Sign Up"}
                 </button>
             </form>
             <Link to={"/login"}>
