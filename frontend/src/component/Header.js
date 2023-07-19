@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context, server } from '../App';
 import toast from 'react-hot-toast';
-import logo from '../assessts/logo.png'
+import smartstock from '../assessts/smartstock.png'
 import spinner from "../assessts/spinner.gif"
 
 const Header = () => {
@@ -40,7 +40,7 @@ const Header = () => {
   return (
     <header className="flex items-center justify-between w-full  px-6 py-4 bg-white shadow">
       <Link to="/" className="flex items-center space-x-2">
-        <img src={logo} alt="Inventory Management Logo" className="w-10 h-10" />
+        <img src={smartstock} alt="Inventory Management Logo" className='w-40 h-10' />
 
       </Link>
       <nav>
