@@ -19,4 +19,9 @@ input::-webkit-inner-spin-button {
     .search-item {
         width: 100%;
     }
+
+    .image {
+        width: 8rem;
+    }
+
 }
