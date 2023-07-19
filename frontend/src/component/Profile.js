@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import spinner from "../assessts/spinner.gif"
 import { toast } from 'react-hot-toast';
 
+
 const Profile = () => {
     const { isAuthenticated, setisAuthenticated, isloading, setisloading } = useContext(Context);
 
@@ -97,6 +98,7 @@ const Profile = () => {
 
                 </div>
                 )}
+                
         </>
     );
 };

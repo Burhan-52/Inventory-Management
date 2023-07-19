@@ -3,9 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Context, server } from '../App';
 import spinner from "../assessts/spinner.gif"
+import open from "../assessts/open.png"
+import close from "../assessts/close.png"
 
 const Signup = () => {
     const [selectedImage, setSelectedImage] = useState(null);
+    const [showPassword, setShowPassword] = useState(false)
+
     const [usersignup, setUserSignup] = useState({
         name: "",
         email: "",
@@ -30,7 +34,7 @@ const Signup = () => {
                     password: usersignup.password,
                     img: selectedImage && selectedImage.myFile
                 }),
-               
+
             }
 
             const response = await fetch(`${server}/signup`, requestOptions)
@@ -72,6 +76,10 @@ const Signup = () => {
         setSelectedImage({ myFile: base64 })
     };
 
+    const handlePasswordToggle = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
+
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col justify-center items-center ">
             <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
@@ -98,13 +106,28 @@ const Signup = () => {
                 </div>
                 <div className="mb-4">
                     <label htmlFor="password" className="block mb-2 font-bold">Password:</label>
-                    <input
-                        type="password"
-                        value={usersignup.password}
-                        onChange={(e) => setUserSignup({ ...usersignup, password: e.target.value })}
-                        required
-                        className="w-full border border-gray-300 rounded px-3 py-2"
-                    />
+                    <div className="relative">
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            id="password"
+                            value={usersignup.password}
+                            onChange={(e) => setUserSignup({ ...usersignup, password: e.target.value })}
+                            required
+                            className="w-full border border-gray-300 rounded px-3 py-2 pr-10" // Added paddingRight for the icon
+                        />
+                        {showPassword ? <img
+                            src={open}
+                            alt="Toggle password visibility"
+                            onClick={handlePasswordToggle}
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2 h-5 cursor-pointer"
+                        /> :
+                            <img
+                                src={close}
+                                alt="Toggle password visibility"
+                                onClick={handlePasswordToggle}
+                                className="absolute right-2 top-1/2 transform -translate-y-1/2 h-5 cursor-pointer"
+                            />}
+                    </div>
                 </div>
 
                 <div className="mb-4">

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context, server } from '../App';
 import toast from 'react-hot-toast';
@@ -6,7 +6,8 @@ import logo from '../assessts/logo.png'
 import spinner from "../assessts/spinner.gif"
 
 const Header = () => {
-  const { isAuthenticated, setisAuthenticated ,isloading, setisloading } = useContext(Context);
+  const { isAuthenticated, setisAuthenticated } = useContext(Context);
+  const [isloading, setisloading] = useState(false)
 
   const navigate = useNavigate();
 
@@ -68,7 +69,7 @@ const Header = () => {
               onClick={handleLogout}
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline"
             >
-               {isloading ? <img className='w-6 h-6' src={spinner} alt='spinner' /> : "Logout"}
+              {isloading ? <img className='w-6 h-6' src={spinner} alt='spinner' /> : "Logout"}
             </button>
           ) : (
             <li>

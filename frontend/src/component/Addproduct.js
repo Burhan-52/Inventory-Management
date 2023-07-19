@@ -23,6 +23,7 @@ const AddProduct = () => {
     const [searchdata, setsearchdata] = useState([])
     const [loading, setLoading] = useState(false)
     const [updateloading, setupdateloading] = useState(false)
+    const [isdelete, setisDelete] = useState(false)
 
 
     const handleSubmit = async (e) => {
@@ -49,7 +50,7 @@ const AddProduct = () => {
             toast.error(error)
             console.log(error)
         }
-        
+
         setisloading(false)
         setProduct({
             productname: '',
@@ -75,7 +76,7 @@ const AddProduct = () => {
 
     const deleteproduct = async (id) => {
         try {
-            setisloading(true)
+            setisDelete(true)
             const requestOptions = {
                 method: 'DELETE',
             }
@@ -83,11 +84,12 @@ const AddProduct = () => {
             const data = await response.json();
             setRefresh((prev) => !prev)
             toast.success(data.message);
-            setisloading(false)
+            setisDelete(false)
+
         } catch (error) {
             console.log(error)
         }
-        setisloading(false)
+        setisDelete(false)
     }
 
     const searchProduct = async () => {
@@ -243,7 +245,7 @@ const AddProduct = () => {
                 </button>
             </form>
 
-            <ProductTable productList={productList} deleteproduct={deleteproduct} />
+            <ProductTable productList={productList} deleteproduct={deleteproduct} isdelete = {isdelete}/>
 
         </div >
     );
