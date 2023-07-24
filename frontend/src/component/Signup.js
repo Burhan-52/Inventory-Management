@@ -91,6 +91,7 @@ const Signup = () => {
                         value={usersignup.name}
                         onChange={(e) => setUserSignup({ ...usersignup, name: e.target.value })}
                         required
+                        minlength="4"
                         className="w-full border border-gray-300 rounded px-3 py-2"
                     />
                 </div>
@@ -113,6 +114,7 @@ const Signup = () => {
                             value={usersignup.password}
                             onChange={(e) => setUserSignup({ ...usersignup, password: e.target.value })}
                             required
+                            minlength="8"
                             className="w-full border border-gray-300 rounded px-3 py-2 pr-10" // Added paddingRight for the icon
                         />
                         {showPassword ? <img
