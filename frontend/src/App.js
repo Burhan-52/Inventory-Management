@@ -3,7 +3,7 @@ import Product from './component/Product';
 import { createContext, useState } from "react"
 
 export const Context = createContext({});
-export const server = "https://corsproxy.io/?https://inventory-management-yho6.onrender.com"
+export const server = "https://inventory-management-yho6.onrender.com"
 
 function App() {
 
