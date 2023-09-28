@@ -28,8 +28,8 @@ connectToMongo()
 
 //Middleware 
 
-app.use("/", userRouter)
-app.use("/product", productRouter)
+app.use("https://inventory-management-yho6.onrender.com/", userRouter)
+app.use("https://inventory-management-yho6.onrender.com/product", productRouter)
 
 
 app.listen(process.env.PORT, () => {
